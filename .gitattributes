@@ -1,0 +1,6 @@
+**/*.dcm filter=lfs diff=lfs merge=lfs -text
+**/*.nii filter=lfs diff=lfs merge=lfs -text
+**/b0 filter=lfs diff=lfs merge=lfs -text
+**/rawdata.job0 filter=lfs diff=lfs merge=lfs -text
+**/traj filter=lfs diff=lfs merge=lfs -text
+**/2dseq filter=lfs diff=lfs merge=lfs -text

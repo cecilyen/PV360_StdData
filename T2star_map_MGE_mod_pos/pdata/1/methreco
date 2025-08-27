@@ -1,0 +1,33 @@
+##TITLE=Parameter List, ParaVision 360 V3.6
+##JCAMPDX=4.24
+##DATATYPE=Parameter Values
+##ORIGIN=Bruker BioSpin GmbH & Co. KG
+##OWNER=nmrsu
+$$ Write Options: Symbolic Enums, RLE encoded arrays, symbol visibility
+$$ 2024-12-04 10:19:52.881 +0100  nmrsu@czc1517bc3
+$$ /opt/nmrdata/PV-360.3.6/data/nmrsu/20241204_095940_std_PV360_3_6_94T_protocols_B_1_3/12/pdata/1/methreco
+$$ process /opt/PV-360.3.6/prog/bin/parxserver
+##$PVM_GradientLinearityCorrection=No
+##$RecoMethMode=Default
+##$WeightingMode=positive_mask
+##$MaskWeighting=4
+##$GaussBroadening=1
+##$PVM_AtsDataset=(<>, <>, 0, 0, <>, <>, <>)
+##$PVM_AtsDataSeries=( 1 )
+(0, 0)
+##$PVM_NnDenoising=No
+##$PVM_NnNDenoisingLevel=1
+##$PVM_NnDenoisingLevel=( 1 )
+100
+##$PVM_NnDenoisingPre=No
+##$PVM_NnDenoisingLevelPre=0
+##$PVM_NnDenoisingDb=No
+##$PVM_NnDenoising3D=1
+##$PVM_NnCpuOnly=No
+##$PVM_NnParallelProcessing=1
+##$PVM_NnPatchSizeMax=0
+$$ @vis= MethodRecoGroup PVM_GradientLinearityCorrection RecoMethMode
+$$ @vis= MethodAtsRecoGroup PVM_AtsDataset PVM_AtsDataSeries
+$$ @vis= NeuralNetworkGroup PVM_NnDenoising PVM_NnPatchSizeMax
+##END=
+$$ File finished by PARX at 2024-12-04 10:19:52.881 +0100

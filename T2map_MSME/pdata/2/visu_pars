@@ -1,0 +1,246 @@
+##TITLE=Parameter List, ParaVision 360 V3.6
+##JCAMPDX=4.24
+##DATATYPE=Parameter Values
+##ORIGIN=Bruker BioSpin GmbH & Co. KG
+##OWNER=nmrsu
+$$ Write Options: Symbolic Enums, RLE encoded arrays, symbol visibility
+$$ 2024-07-25 09:46:29.706 +0200  nmrsu@host
+$$ /opt/nmrdata/PV-360.3.6/data/nmrsu/20240725_090212_std_PV360_3_6_94T_protocols_1_1/11/pdata/2/visu_pars
+$$ process /opt/PV-360.3.6/prog/bin/parxserver
+##$VisuVersion=8
+##$VisuUid=( 65 )
+<2.16.756.5.5.200.906653985.21355.1721893589.2>
+##$VisuCreator=( 65 )
+<ParaVision>
+##$VisuCreatorVersion=( 195 )
+<360.3.6>
+##$VisuCreationDate=<2024-07-25T09:46:29,298+0200>
+##$VisuInstanceType=STANDARD_INSTANCE
+##$VisuInstanceModality=( 65 )
+<MR>
+##$VisuInstanceDeIdentified=No
+##$VisuCoreFrameCount=30
+##$VisuCoreDim=2
+##$VisuCoreSize=( 2 )
+192 192
+##$VisuCoreDimDesc=( 2 )
+spatial spatial
+##$VisuCoreExtent=( 2 )
+20 20
+##$VisuCoreFrameThickness=( 1 )
+1
+##$VisuCoreUnits=( 2, 65 )
+<mm> <mm>
+##$VisuCoreOrientation=( 5, 9 )
+-0.99939082701909576 0 -0.034899496702500969 0 -1 0 -0.034899496702500969 0 
+0.99939082701909576 -0.99939082701909576 0 -0.034899496702500969 0 -1 0 
+-0.034899496702500969 0 0.99939082701909576 -0.99939082701909576 0 
+-0.034899496702500969 0 -1 0 -0.034899496702500969 0 0.99939082701909576 
+-0.99939082701909576 0 -0.034899496702500969 0 -1 0 -0.034899496702500969 0 
+0.99939082701909576 -0.99939082701909576 0 -0.034899496702500969 0 -1 0 
+-0.034899496702500969 0 0.99939082701909576
+##$VisuCorePosition=( 5, 3 )
+10.279350749182692 10 -4.4690472191489077 10.233981403469441 10 
+-3.169839144024083 10.18861205775619 10 -1.8706310688992582 
+10.143242712042939 10 -0.57142299377443351 10.097873366329686 10 
+0.72778508135039077
+##$VisuCoreModalityOffset=( 1, 3 )
+0 0 0
+##$VisuCoreAtsCenterDistance=369.35388739293921
+##$VisuCoreDataMin=( 30 )
+@30*(0)
+##$VisuCoreDataMax=( 30 )
+209600.171875 4891.08251953125 122.97617340087891 6.8084540367126465 
+145153344 1 210226.921875 4887.55859375 120.34892272949219 6.3923401832580566 
+210858256 1 239279 5157.0380859375 108.58666229248047 8.9482507705688477 
+194812912 1 289514.0625 5871.0126953125 110.78845977783203 4.5763025283813477 
+211793136 1 342690.0625 7132.1044921875 99.247413635253906 4.1145496368408203 
+364932608 1
+##$VisuCoreDataOffs=( 30 )
+@30*(0)
+##$VisuCoreDataSlope=( 30 )
+@30*(1)
+##$VisuCoreDataUnits=( 6, 65 )
+<> <> <ms> <ms> <> <>
+##$VisuCoreFrameType=( 1 )
+REAL_IMAGE
+##$VisuFGElemComment=( 6, 65 )
+<Signal Intensity> <σ of Signal Intensity> <T2 Relaxation Time> <σ of T2 
+Relaxation Time> <Fit χ²> <Fit Valid>
+##$VisuCoreSlicePacksDef=(1, 1)
+##$VisuCoreSlicePacksSlices=( 1 )
+(0, 5)
+##$VisuCoreSlicePacksSliceDist=( 1 )
+0.046925075264796945
+##$VisuCoreWordType=_32BIT_FLOAT
+##$VisuCoreByteOrder=littleEndian
+##$VisuFGOrderDescDim=2
+##$VisuFGOrderDesc=( 2 )
+(6, <FG_ISA>, <Parameters>, 0, 2) (5, <FG_SLICE>, <>, 2, 2)
+##$VisuGroupDepVals=( 4 )
+(<VisuFGElemComment>, 0) (<VisuCoreDataUnits>, 0) (<VisuCoreOrientation>, 0) 
+(<VisuCorePosition>, 0)
+##$VisuSubjectName=( 65 )
+<std_PV360_3.6^^^^>
+##$VisuSubjectId=( 65 )
+<std_PV360_3.6>
+##$VisuSubjectUid=( 65 )
+<2.16.756.5.5.200.906653985.1404.1721890932.8>
+##$VisuSubjectInstanceCreationDate=(1721890932, 254, 120)
+##$VisuSubjectBirthDate=( 9 )
+<20240725>
+##$VisuSubjectSex=UNKNOWN
+##$VisuSubjectType=Quadruped
+##$VisuStudyUid=( 65 )
+<2.16.756.5.5.200.906653985.1404.1721890932.9>
+##$VisuStudyDate=<2024-07-25T09:02:12,259+0200>
+##$VisuStudyId=( 65 )
+<94T_protocols>
+##$VisuStudyNumber=1
+##$VisuSubjectWeight=0.001
+##$VisuStudyReferringPhysician=( 65 )
+<nmrsu>
+##$VisuSeriesUid=( 65 )
+<2.16.756.5.5.200.906653985.1404.1721891568.386>
+##$VisuExperimentNumber=11
+##$VisuProcessingNumber=2
+##$VisuSeriesDate=<2024-07-25T09:46:27,706+0200>
+##$VisuSubjectPosition=Head_Prone
+##$VisuSeriesTypeId=( 65 )
+<DERIVED_ISA>
+##$VisuSeriesCreationId=VCMN_ACQUISITION
+##$VisuSeriesComment=( 65 )
+<Parameter maps T2 relaxation, bg: Otsu.>
+##$VisuSeriesExperimentComment=( 65 )
+<T2map_MSME>
+##$VisuSeriesReferences=( 1 )
+(</opt/nmrdata/PV-360.3.6/data/nmrsu>, 
+<20240725_090212_std_PV360_3_6_94T_protocols_1_1>, 11, 1, 
+<2.16.756.5.5.200.906653985.1404.1721891568.386>, <ACQ_BRUKER_PVM>, <>)
+##$VisuSeriesFrameOfReferenceUid=( 65 )
+<2.16.756.5.5.200.906653985.1404.1721890932.9>
+##$VisuManufacturer=( 65 )
+<Bruker BioSpin GmbH & Co. KG>
+##$VisuAcqSoftwareVersion=( 65 )
+<PV-360.3.6>
+##$VisuInstitution=( 65 )
+<Bruker BioSpin>
+##$VisuStation=( 65 )
+<System C1 94/17 Maxwell PET/MR>
+##$VisuSystemOrderNumber=( 65 )
+<0>
+##$VisuAcqDate=<2024-07-25T09:39:23,181+0200>
+##$VisuAcqSequenceName=( 40 )
+<Bruker:MSME>
+##$VisuAcquisitionProtocol=( 65 )
+<T2map_MSME>
+##$VisuAcqScanTime=422400
+##$VisuAcqFrameNumbers=( 30 )
+0 0 0 0 0 0 33 33 33 33 33 33 11 11 11 11 11 11 44 44 44 44 44 44 22 22 22 22 
+22 22
+##$VisuCardiacSynchUsed=No
+##$VisuRespSynchUsed=No
+##$VisuAcqNumberOfAverages=1
+##$VisuAcqRepetitionTime=( 1 )
+2200
+##$VisuCoilReceiveName=( 65 )
+<RF ARR 400 1H M.BR. 2x2 RO AD>
+##$VisuCoilReceiveManufacturer=( 65 )
+<BMRIDE>
+##$VisuCoilReceiveType=MULTICOIL
+##$VisuCoilReceiveIsQuadrature=No
+##$VisuCoilReceiveMultiName=( 4 )
+(<Element 1>, Yes) (<Element 2>, Yes) (<Element 3>, Yes) (<Element 4>, Yes)
+##$VisuCoilTransmitName=( 65 )
+<RF RES 400 1H 103/082 QSN TR AD SL>
+##$VisuCoilTransmitManufacturer=( 65 )
+<BMRIDE>
+##$VisuCoilTransmitType=MULTICOIL
+##$VisuCoilTransmitIsQuadrature=Yes
+##$VisuCoilTransmitMultiName=( 2 )
+(<Element 1>, Yes) (<Element 2>, Yes)
+##$VisuAcqEchoTrainLength=1
+##$VisuAcqImagingFrequency=400.38072396468129
+##$VisuAcqImagedNucleus=( 8 )
+<1H>
+##$VisuAcqPixelBandwidth=388.68159203980099
+##$VisuAcqFlipAngle=180
+##$VisuMrAcqFlipAngleVariable=No
+##$VisuAcqSize=( 2 )
+192 192
+##$VisuAcqImageSizeAccellerated=No
+##$VisuAcqGradEncoding=( 2 )
+read_enc phase_enc
+##$VisuAcqEchoTime=( 1 )
+8
+##$VisuAcqAntiAlias=( 2 )
+1 1
+##$VisuAcqEchoSequenceType=SpinEcho
+##$VisuAcqSpinsVelocityEncoded=No
+##$VisuAcqHasTimeOfFlightContrast=No
+##$VisuAcqIsEpiSequence=No
+##$VisuAcqSpectralSuppression=NoSuppression
+##$VisuAcqKSpaceTraversal=RectilinearTraversal
+##$VisuAcqEncodingOrder=( 2 )
+LinearEncoding LinearEncoding
+##$VisuAcqKSpaceTrajectoryCnt=0
+##$VisuAcqKSpaceFiltering=( 2 )
+DICOM_NONE DICOM_NONE
+##$VisuAcqFlowCompensation=FlowNone
+##$VisuAcqSpoiling=GradientSpoiled
+##$VisuAcqPartialFourier=( 2 )
+1 1
+##$VisuAcqParallelReductionFactor=( 2 )
+1 1
+##$VisuAcqMagnetizationTransfer=No
+##$VisuAcqBloodSignalNulling=No
+##$VisuMagneticFieldStrength=9.4039065192756777
+##$VisuMrMultiSpinEcho=No
+##$VisuMrMultiPlanar=No
+##$VisuMrSteadyStatePulse=MR_ST_TRANSVERSE
+##$VisuMrCoverageOfKSpace=MR_CKS_FULL
+##$VisuMrPercentSampling=100
+$$ @vis= Visu VisuInstance VisuVersion VisuUid VisuCreator VisuCreatorVersion
+$$ @vis= VisuCreationDate VisuInstanceType VisuInstanceModality
+$$ @vis= VisuInstanceDeIdentified VisuCore VisuCoreFrameCount VisuCoreDim
+$$ @vis= VisuCoreSize VisuCoreDimDesc VisuCoreExtent VisuCoreFrameThickness
+$$ @vis= VisuCoreUnits VisuCoreOrientation VisuCorePosition
+$$ @vis= VisuCoreModalityOffset VisuCoreAtsCenterDistance VisuCoreDataMin
+$$ @vis= VisuCoreDataMax VisuCoreDataOffs VisuCoreDataSlope VisuCoreDataUnits
+$$ @vis= VisuCoreFrameType VisuFGElemComment VisuCoreSlicePacksDef
+$$ @vis= VisuCoreSlicePacksSlices VisuCoreSlicePacksSliceDist VisuPixel
+$$ @vis= VisuCoreWordType VisuCoreByteOrder VisuFrameOrderDesc
+$$ @vis= VisuFGOrderDescDim VisuFGOrderDesc VisuGroupDepVals VisuSubject
+$$ @vis= VisuSubjectName VisuSubjectId VisuSubjectUid
+$$ @vis= VisuSubjectInstanceCreationDate VisuSubjectBirthDate VisuSubjectSex
+$$ @vis= VisuSubjectType VisuStudy VisuStudyUid VisuStudyDate VisuStudyId
+$$ @vis= VisuStudyNumber VisuSubjectWeight VisuStudyReferringPhysician
+$$ @vis= VisuSeries VisuSeriesUid VisuExperimentNumber VisuProcessingNumber
+$$ @vis= VisuSeriesDate VisuSubjectPosition VisuSeriesTypeId
+$$ @vis= VisuSeriesCreationId VisuSeriesComment VisuSeriesExperimentComment
+$$ @vis= VisuSeriesReferences VisuSeriesFrameOfReferenceUid VisuContrastAgent
+$$ @vis= VisuEquipment VisuManufacturer VisuAcqSoftwareVersion VisuInstitution
+$$ @vis= VisuStation VisuSystemOrderNumber VisuAcq VisuAcqDate
+$$ @vis= VisuAcqSequenceName VisuAcquisitionProtocol VisuAcqScanTime
+$$ @vis= VisuAcqFrameNumbers VisuCardiacSynchUsed VisuRespSynchUsed
+$$ @vis= VisuAcqNumberOfAverages VisuMxi VisuAcqRepetitionTime VisuCoilReceive
+$$ @vis= VisuCoilReceiveName VisuCoilReceiveManufacturer VisuCoilReceiveType
+$$ @vis= VisuCoilReceiveIsQuadrature VisuCoilReceiveMultiName VisuCoilTransmit
+$$ @vis= VisuCoilTransmitName VisuCoilTransmitManufacturer
+$$ @vis= VisuCoilTransmitType VisuCoilTransmitIsQuadrature
+$$ @vis= VisuCoilTransmitMultiName VisuMri VisuAcqEchoTrainLength
+$$ @vis= VisuAcqImagingFrequency VisuAcqImagedNucleus VisuAcqPixelBandwidth
+$$ @vis= VisuAcqFlipAngle VisuMrAcqFlipAngleVariable VisuAcqSize
+$$ @vis= VisuAcqImageSizeAccellerated VisuAcqGradEncoding VisuAcqEchoTime
+$$ @vis= VisuAcqAntiAlias VisuAcqEchoSequenceType VisuAcqSpinsVelocityEncoded
+$$ @vis= VisuAcqHasTimeOfFlightContrast VisuAcqIsEpiSequence
+$$ @vis= VisuAcqSpectralSuppression VisuAcqKSpaceTraversal
+$$ @vis= VisuAcqEncodingOrder VisuAcqKSpaceTrajectoryCnt
+$$ @vis= VisuAcqKSpaceFiltering VisuAcqFlowCompensation VisuAcqSpoiling
+$$ @vis= VisuAcqPartialFourier VisuAcqParallelReductionFactor
+$$ @vis= VisuAcqMagnetizationTransfer VisuAcqBloodSignalNulling
+$$ @vis= VisuMagneticFieldStrength VisuMrMultiSpinEcho VisuMrMultiPlanar
+$$ @vis= VisuMrSteadyStatePulse VisuMrCoverageOfKSpace VisuMrPercentSampling
+$$ @vis= VisuMrs
+##END=
+$$ File finished by PARX at 2024-07-25 09:46:29.707 +0200

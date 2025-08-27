@@ -1,0 +1,15 @@
+##TITLE=Parameter List, ParaVision 360 V3.6
+##JCAMPDX=4.24
+##DATATYPE=Parameter Values
+##ORIGIN=Bruker BioSpin GmbH & Co. KG
+##OWNER=nmrsu
+$$ Write Options: Symbolic Enums, RLE encoded arrays, symbol visibility
+$$ 2024-07-25 09:39:04.984 +0200  nmrsu@host
+$$ /opt/nmrdata/PV-360.3.6/data/nmrsu/20240725_090212_std_PV360_3_6_94T_protocols_1_1/10/acqp.out
+$$ process /opt/PV-360.3.6/prog/bin/parxserver
+##$ACQ_sw_version=( 65 )
+<PV-360.3.6>
+##$ACQ_abs_time=(1721892939, 125, 120)
+$$ @vis= ACQP_OUT ACQ_sw_version ACQ_abs_time
+##END=
+$$ File finished by PARX at 2024-07-25 09:39:04.985 +0200

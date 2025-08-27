@@ -1,0 +1,25 @@
+##TITLE=Parameter List, ParaVision 360 V3.6
+##JCAMPDX=4.24
+##DATATYPE=Parameter Values
+##ORIGIN=Bruker BioSpin GmbH & Co. KG
+##OWNER=nmrsu
+$$ Write Options: Symbolic Enums
+$$ 2024-07-25 10:07:44.343 +0200  nmrsu@host
+$$ /opt/nmrdata/PV-360.3.6/data/nmrsu/20240725_090212_std_PV360_3_6_94T_protocols_1_1/20/shimcondition
+$$ process /opt/PV-360.3.6/prog/bin/parxserver
+##$SHIM_State=( 1024 )
+<B-GA105S HP GRAD SYSTEM BC94/17 MAXWELL (BFR W149640/0021).222714468>
+##$N_SHIMS_av=10
+##$SHIM_Identifiers=( 10, 64 )
+<Ch1: Spf17 FRED> <Ch2: Spf3 Gradient Z> <Ch3: Spf4 SPS1,1 CoilPins=B1-B2 
+CoilId=1> <Ch4: Spf9 SPS1,7 CoilPins=B4-B5 CoilId=6> <Ch5: Spf1 Gradient X> 
+<Ch6: Spf2 Gradient Y> <Ch7: Spf5 SPS1,4 CoilPins=C4-C5 CoilId=2> <Ch8: Spf6 
+SPS1,3 CoilPins=D1-D2 CoilId=3> <Ch9: Spf7 SPS1,6 CoilPins=F1-F2 CoilId=4> 
+<Ch10: Spf8 SPS1,5 CoilPins=E4-E5 CoilId=5>
+##$ACQ_basic_shim=( 10 )
+0.093185912750472152 -5.3803311207751587 5.1537346456092168 
+-0.32425421530479898 2.7527275501640345 -7.5906004425116347 
+0.33798733501182576 0.11902037079423208 -0.88960097657740134 
+1.1390859845883878
+##END=
+$$ File finished by PARX at 2024-07-25 10:07:44.343 +0200

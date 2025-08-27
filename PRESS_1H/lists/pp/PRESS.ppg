@@ -1,0 +1,198 @@
+;****************************************************************
+;
+; Copyright (c) 2002-2003
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; PRESS.ppg - voxel selective spectroscogpy  method
+;
+;****************************************************************
+
+#include <MRI.include>
+#include <PrepModulesHead.mod>
+
+;-----------------------------------------------------------------
+; Copyright (c) 2023
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+;
+; All Rights Reserved
+; 
+;
+; Declaration of pulseprogram parameters and definition of subroutine
+; PressMegaPrep
+;
+;-----------------------------------------------------------------
+
+if(MGJedFlag)
+{
+  define list<shape> mgjed_pulse = {$MGJed_AcqRfShapes}
+  define delay mgjed_pad1 = {$MGJedD[0]} 
+  define delay mgjed_pad2 = {$MGJedD[1]} 
+  define delay mgjed_pad3 = {$MGJedD[2]} 
+  define delay mgjed_pad4 = {$MGJedD[3]} 
+  define pulse mgjed_p0   = {$MGJedP}
+  define list<frequency> mgjed_txfrq = {$MGJedOffsetList} 
+  define list<frequency> mgjed_cf1 = {$MGJedPhaseCorrList1} 
+  define list<frequency> mgjed_cf2 = {$MGJedPhaseCorrList2} 
+}
+
+subroutine PressMegaPrep1(phase jedph)
+{
+  if(MGJedFlag)
+  {
+    d8	grad_ramp{g5+MGJedSpoilGrad, g6+MGJedSpoilGrad, g7} 
+    d4 grad_off mgjed_txfrq:f1
+    mgjed_pad1 
+    (mgjed_p0 : mgjed_pulse jedph):f1
+    mgjed_pad2
+  }
+  else
+  {
+	d8	grad_ramp{g5, g6, g7}
+	d9	grad_off
+  }
+}
+
+subroutine PressMegaPrep2(phase jedph)
+{
+  if(MGJedFlag)
+  {
+    d10	grad_ramp{g8, g9+MGJedSpoilGrad, g10} 
+    d4 grad_off mgjed_txfrq:f1
+    mgjed_pad3 
+    (mgjed_p0 : mgjed_pulse jedph):f1
+    d10 grad_ramp{MGJedSpoilGrad, 0, MGJedSpoilGrad} mgjed_cf2:f1
+    d4  grad_off freqZero:f1 mgjed_txfrq.inc mgjed_cf1.inc mgjed_cf2.inc
+    mgjed_pad4
+  }
+  else
+  {
+	d10	grad_ramp{g8, g9, g10}
+	d11	grad_off				
+  }
+}
+
+
+define delay de4
+"de4=0.00002s-de"
+
+#include <acqdec.mod>
+#include <Navigator.mod>
+define loopcounter lds={$PVM_DummyScans}
+define list<loopcounter> avList={$AverageList}
+define list<frequency> freqTx={$ACQ_O1_list}
+define list<frequency> freqRx={$ACQ_O1B_list}
+define list<frequency> freqZero = { 0 }  
+
+INIT_DEVICES
+
+;-------D/P-----GRAD-----------------------------RF/ACQ---------
+
+        0u      rpp1
+        0u      rpp2
+        0u      rpp3
+        0u	rpp31
+if(MGJedFlag)
+{
+   0u  mgjed_txfrq.res
+   0u  mgjed_cf1.res
+   0u  mgjed_cf2.res
+}
+
+500u                                            freqZero:f1
+
+start,	UPDATE_DYN_PARS_30u 					
+	1m					freqRx(receive):f1 
+      
+
+subr TriggerSlice()
+subr Noe()
+subr WsOvs(ph0,ph0)
+
+;---------localisation  module------------------------------------
+	d4	grad_ramp{g1, 0.0, 0.0} 	freqTx:f1
+	d6					freqTx.inc
+	(p1:sp1 ph1):f1
+	d6                                      freqZero:f1 
+	d7	grad_off		
+	d8      grad_ramp{g4, g6, g7}
+	d4	grad_ramp{0.0, g2, 0.0}         freqTx:f1
+	d6					freqTx.inc
+	(p2:sp2 ph2):f1
+	d6                                      freqZero:f1
+        subr PressMegaPrep1(ph3)
+;-------pulse adjustments--------------------------------------
+	if ( OPT_ManAdjustment!=NoManAdjustment ) {
+  	  d12	  grad_ramp{g11, g12, g13}
+	  d4	  groff	
+	}
+	20u     ;for symmetry with de4
+        if (MGJedFlag)
+        {
+	   d10	 grad_ramp{g8, g9, g10+MGJedSpoilGrad} mgjed_cf1:f1
+        }
+        else
+        {
+	   d10	 grad_ramp{g8, g9, g10}         freqZero:f1
+        }
+	d4	grad_ramp{0.0, 0.0, g3}		freqTx:f1
+	d6					freqTx.inc
+	(p3:sp3 ph3):f1
+	d6                                      freqZero:f1
+        subr PressMegaPrep2(ph3)
+;---------data acquisition--------------------------------------------	
+	;pulse adjustments:
+	if ( OPT_ManAdjustment!=NoManAdjustment ) 
+	{
+	  d4	grad_ramp{g14, g15, g16}	
+	  de4
+	   				        ADC_INIT_(job0, ph0, ph31)
+	  AQ_(job0)				ADC_START_(job0)	
+	}
+	else 
+	{
+	  subr acqdec(ph0,ph31,AQ_(job0))         ;lasts 20u+aqq (including de)
+        }
+        d4 grad_off
+	1m					ADC_END_(job0)
+
+if(PVM_NavOnOff == On)
+{
+        20u  switch_realtime_tables
+	subr NavigatorGlobal(sp0, ph31, ph0, ph31)		  
+}
+	d1					;TR delay
+
+;-------- J-editing loop ---------------------------------------------
+        lo to start times NI
+;---------dummy scans ------------------------------------------------
+	"lds = lds - 1"		
+	if "lds>=0" goto start	
+;---------averaging & phase cycling-----------------------------------
+	if ( ACQ_scan_type == Scan_Experiment ) {
+	0u					ipp1
+	0u					ipp2
+	0u 					ipp3
+	0u 					ipp31
+	}
+	lo to start times avList
+	0u  avList.inc	
+	0u					rpp1
+	0u					rpp2
+	0u 					rpp3
+	0u 					rpp31
+        
+        lo to start times NR
+	SETUP_GOTO(start)
+exit
+
+
+ph0 = 0
+ph1 = {0 0 0 0 0 0 0 0  0 0 0 0 0 0 0 0}^2^1^3
+ph2 = {0 0 1 1 0 0 1 1  2 2 3 3 2 2 3 3}^2^1^3
+ph3 = {0 2 0 2 1 3 1 3  0 2 0 2 1 3 1 3}^2^1^3
+ph31= {0 0 2 2 2 2 0 0  0 0 2 2 2 2 0 0}^2^1^3

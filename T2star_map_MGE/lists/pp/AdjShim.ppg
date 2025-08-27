@@ -1,0 +1,131 @@
+;****************************************************************
+;
+; $Source$
+;
+; Copyright (c) 2017
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; $Id$
+;
+;****************************************************************
+
+#include <MRI.include>
+
+#include "Trigger.mod"
+
+define list<frequency> freqRx = {$ACQ_O1B_list}
+define list<frequency> freqTx = {$ACQ_O1_list}
+
+define delay denab
+"denab = 50u - de"
+
+if(VoxelExc == Yes)
+{
+define delay StD0 = {$St_D0}
+define delay StD1 = {$St_D1}
+define delay StD2 = {$St_D2}
+define delay StD3 = {$St_D3}
+define delay StD4 = {$St_D4}
+define delay StD5 = {$St_D5}
+define delay StD6 = {$St_D6}
+define delay StD7 = {$St_D7}
+define delay StD7mDE
+"StD7mDE=StD7-de"
+define delay StD8 = {$St_D8}
+define delay StD9 = {$St_D9}
+
+
+define pulse StP0 = {$St_P0}
+define pulse StP1 = {$St_P1}
+define pulse StP2 = {$St_P2}
+
+}
+
+
+subroutine SteamLoc(any psh1,phase phpul1, phase phpul2, phase phpul3, phase phrec, phase phref)
+{
+      StD0      grad_ramp{St_Gr1, 0, 0}             freqTx:f1
+        0u      freqTx.inc
+      StD1                                                           
+     (StP0:psh1 phpul1):f1
+      StD2      grad_ramp{St_Gr2, St_Gp2, St_Gs2}   freqTx:f1
+        0u      freqTx.inc
+
+   if(StGscheme ==  1)
+   {
+      StD9      grad_off
+      StD3      grad_ramp{0, St_Gp1, 0}                      
+   }
+   if(StGscheme == 0)
+   {
+      StD3      grad_ramp{0, St_Gp1, 0}                      
+   }
+
+     (StP1:psh1 phpul2):f1
+      StD4      grad_ramp{St_Gr3, St_Gp3, St_Gs3}   freqTx:f1
+        0u      freqTx.inc
+      StD5      grad_ramp{0, 0, St_Gs1}                        
+     (StP2:psh1 phpul3):f1
+      StD6      grad_ramp{St_Gr4, St_Gp4, St_Gs4} 
+   StD7mDE      grad_off
+                ADC_INIT_(job0,phrec,phref)
+
+  AQ_(job0)     ADC_START_(job0)
+
+      StD8 
+       40u      ADC_END_(job0)
+}
+
+
+INIT_DEVICES
+
+        0u      freqTx.res
+        0u      freqRx.res
+start, UPDATE_DYN_PARS_30u 
+       10u      freqRx(receive):f1
+        0u      freqRx.inc
+           subr TriggerPhase()
+
+   if(VoxelExc == Yes)
+   {
+           subr SteamLoc(sp1,ph1,ph2,ph3,ph0,ph31)
+        d0      ipp0
+        0u      ipp1 
+        0u      ipp2
+        0u      ipp3
+        0u      ipp31
+   }
+   else
+   {
+        d1
+       (p0:sp0  ph0):f1
+     denab
+                ADC_INIT_(job0, ph0, ph1)
+
+  AQ_(job0)     ADC_START_(job0)
+
+       10u
+       40u      ADC_END_(job0)
+        d0      ipp0 
+        0u      ipp1
+   }
+
+     lo to start times NA
+        0u      rpp0
+        0u      rpp1
+        0u      rpp2 
+        0u      rpp3
+        0u      rpp31
+
+SETUP_GOTO(start)
+
+exit
+
+ph0 = 0
+ph1 = {0 0 0 0 0 0 0 0  0 0 0 0 0 0 0 0}^2^1^3
+ph2 = {0 0 1 1 0 0 1 1  2 2 3 3 2 2 3 3}^2^1^3
+ph3 = {0 2 0 2 1 3 1 3  0 2 0 2 1 3 1 3}^2^1^3
+ph31= {0 2 1 3 1 3 2 0  2 0 3 1 3 1 0 2}^2^1^3

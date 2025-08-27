@@ -1,0 +1,149 @@
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; MGE - a multi gradient echo imaging method
+;
+;****************************************************************
+;
+; d0 - TR padding
+; d1 - T1 padding
+; d2 - T2 padding
+; d3 = RiseTime
+; d4 = RampTime
+
+#include <MRI.include>
+#include <PrepModulesHead.mod>
+
+define delay denab
+"denab =  d3 - de"
+
+define list<phase> phaselist = {$RFPhaseList}
+define list<frequency> freqTx = {$ACQ_O1_list}
+define list<frequency> freqRx = {$ACQ_O1B_list}
+
+INIT_DEVICES
+
+#define r2d ACQ_spatial_phase_1
+#define r3d ACQ_spatial_phase_2
+
+grad_zero_for_gs <r2d, r3d>
+
+
+;----------------------- preparation modules -----------------------
+              subr FlowSatInit()
+              subr SatTransInit()
+start,   0u
+              subr DriftComp()
+   if (PVM_BlBloodOnOff == On)
+   {
+              subr TriggerPhase()
+   }
+
+              subr BlBlood(ph0)
+              subr TriggerPhase()
+              subr SliceSelIr()
+              subr Tagging()
+
+;-------------------- start of the main loop -----------------------
+slice,             UPDATE_DYN_PARS_30u
+
+              subr TriggerSlice()
+              subr FlowSat()
+              subr FovSat()
+              subr SatTrans()
+              subr FatSup()
+
+         d6        grad_ramp{0, 0, g9}
+
+;------------------------ slice selection --------------------------
+         d3        grad_ramp{0, 0, g0}            freqTx:f1
+        (p0:sp0    phaselist):f1
+         d4        grad_off
+
+;----------- slice rephase, read dephase, phase encoding -----------
+        d10        grad_ramp{g2, r2d*g3, g1+r3d*g4}
+         d2        grad_off
+
+;----------------------- frequency encoding ------------------------
+echo, denab        grad_ramp{g5, 0, 0}            freqRx(receive):f1
+
+                   ADC_INIT_(job0, ph1, phaselist)
+   AQ_(job0)       ADC_START_(job0)
+
+        d13        grad_off
+
+
+   if (EchoAcqMode == allEchoes)
+   {
+        10u        ADC_END_(job0)
+
+         0u        freqRx.inc
+      denab        grad_ramp{g10, 0, 0}           freqRx(receive):f1
+
+                   ADC_INIT_(job0, ph1, phaselist)
+   AQ_(job0)       ADC_START_(job0)
+
+        d13        grad_off
+   }
+   else
+   {
+        10u
+        d14        grad_ramp{g10, 0, 0}
+        d13        grad_off
+   }
+
+        10u        ADC_END_(job0)
+
+         0u        freqRx.inc
+
+     lo to echo times l10
+
+;------------------ read spoiler + phase encoding ------------------
+        d11        grad_ramp{g6, r2d*g7, r3d*g8}
+        d12        grad_ramp{g6, 0, 0}
+         d3        grad_off
+         d0
+
+              subr FlowSatInc()
+         0u        grad_matrix.inc
+         0u        freqTx.inc
+
+;-----------------------slice and movie loop------------------------
+     lo to slice times NSLICES
+        d20
+         0u        phaselist.inc         ;phase list for RF spoiling
+
+;--------------------------- dummy loop ----------------------------
+                   "l3=l3-1"
+   if "l3>=0" goto start
+
+;------------------------- averaging loop --------------------------
+     lo to start times NA
+
+;----------------------------- common-loop (2D/3D) -----------------------------
+        0u        r2d.inc
+        0u        r3d.inc
+     lo to start times l1
+
+;---------------------- motion averaging loop ----------------------
+     lo to start times NAE
+
+;-------------------------- sattrans loop --------------------------
+              subr SatTransInc()
+
+;------------------------- repetition loop -------------------------
+              subr Evolution()
+
+     lo to start times NR
+
+SETUP_GOTO(start)
+
+exit
+
+ph0 = 0
+ph1 = 0

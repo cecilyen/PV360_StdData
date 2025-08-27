@@ -1,0 +1,114 @@
+;****************************************************************
+;
+; Copyright (c) 2001-2007
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; $Id$
+
+#include <MRI.include>
+
+
+define list<frequency> freqTx = {$ACQ_O1_list}
+define list<frequency> freqRx = {$ACQ_O1B_list}
+
+;counter of dummy scans
+define loopcounter lds = {$PVM_DummyScans}
+
+#include <PrepModulesHead.mod>
+#include <DwiHead.mod>
+#include <epiHead.mod>
+
+INIT_DEVICES
+
+#define r3d ACQ_spatial_phase_2
+
+
+        if(PVM_EpiAdjustMode==2)
+        {
+                define list <grad_scalar> r3d
+        }
+        else
+        {
+                grad_zero_for_gs <r3d>
+        }
+
+        0u      grad_matrix.res
+
+        subr DwiInit()
+        subr MbEpiBlipInit()
+
+DiffL,  0u
+        subr TriggerPhase()
+        subr DriftComp()
+
+slice,  UPDATE_DYN_PARS_30u
+       10u      freqRx(receive):f1
+        0u      freqRx.inc
+
+        subr MbEpiBlipRestore()
+        subr TriggerSlice()
+	subr EpiGradSync()
+        subr FovSat()
+        subr FatSup()
+
+;----------------------------------slice selection------------------
+        d1      grad_ramp{0, 0, g0}     freqTx:f1
+        (p0:sp0 ph0):f1
+        d4      grad_off                freqTx.inc
+
+;----------------------------------slice rephase--------------------
+        d2      grad_ramp{0, 0, g1}
+        d3      grad_off
+        subr DwiPrep(ph1)
+
+#include <epi.mod>
+
+;----------------------------------slice loop-----------------------
+        0u      grad_matrix.inc
+        0u      DwFl0.inc
+        d0
+
+        lo to slice times NSLICES/PVM_MbEncNBands
+        0u      grad_matrix.res
+	d5
+
+;--------------------------- dummy loop ----------------------------
+   "lds = lds - 1"
+   if "lds >= 0"
+   {
+         0u       EpiVd.res
+      goto DiffL
+   }
+
+;----------------------------------averaging loop-------------------
+        lo to DiffL times NA
+
+;----------------------------------2d loop--------------------------
+        0u      Interleaving.inc
+
+        subr MbEpiBlipSet()
+
+        lo to DiffL times l0    ;PVM_EpiNShots
+
+;----------------------------------3d loop--------------------------
+        0u      r3d.inc
+        subr MbEpiBlipInit()
+
+        lo to DiffL times l2    ;PVM_EncMatrix[2]
+        0u      Interleaving.res
+
+;----------------------------------diffusion loop-------------------
+        subr DwiLoop(DiffL)
+
+;----------------------------------repetitions loop-----------------
+        lo to DiffL times PVM_NRepetitions
+
+        SETUP_GOTO(DiffL)
+
+exit
+
+ph0 = 0 2
+ph1 = 1

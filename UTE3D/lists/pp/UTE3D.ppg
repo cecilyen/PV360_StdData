@@ -1,0 +1,193 @@
+;****************************************************************
+;
+; Copyright (c) 2021
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; UTE3D - A 3D Radial Imaging Pulse Program
+;
+;****************************************************************
+
+#include <MRI.include>
+#include <PrepModulesHead.mod>
+#include <Trajectory.mod>
+
+define list<grad_shape> Shape1={$GradShape1}
+define list<grad_shape> Shape2={$GradShape2}
+define list<grad_shape> Shape3={$GradShape3}
+define list<frequency> freqTx = {$ACQ_O1_list}
+
+define delay d7m10u
+"d7m10u = d7 -10u"
+
+;============================================================
+if (PVM_TrajAdjustmentRunning == Yes)
+{ 
+  subr trajPerform()
+}
+else
+{
+  define list<grad_scalar> ProjR={$GradAmpR}
+  define list<grad_scalar> ProjP={$GradAmpP}
+  define list<grad_scalar> ProjS={$GradAmpS}
+  define list<grad_scalar> Proj3D={$Proj3DOffsetHzFac}  
+  define list<grad_scalar> Proj3DRew={$Proj3DRewOffsetHzFac}  
+
+  ;===========================================================
+  ;   declaration of loops
+  ;===========================================================
+
+  grad_zero_for_gs <ProjR,ProjP,ProjS,Proj3D,Proj3DRew>
+
+  ProjR.res
+  ProjP.res
+  ProjS.res
+  Proj3D.res
+  Proj3DRew.res
+INIT_DEVICES
+
+
+  ;===========================================================
+  ;   segmented preparation
+  ;===========================================================
+  subroutine segmentPrep()
+  {
+    ;-------------------preparation---------------------------
+                             subr TriggerPhase()
+     if (GradSync == Yes)
+     {
+                      1u     GRAD_SYNC
+     }
+                             subr DriftComp()
+                             subr FovSat()
+                             subr SatTrans()
+                             subr FatSup()  
+  }
+
+  subroutine segmentAcquire()
+  {
+    ;-------------------slice selection-----------------------
+                      10u  freqTx:f1 
+                     (p0:sp0 ph1):f1
+                      d3
+    ;-------------------dual echo-----------------------------
+    if(DualEcho == Yes)
+    {
+                             ADC_INIT_(job0, ph1, ph0)
+
+      if(ACQ_scan_type == Setup_Experiment)
+      {
+                      d5     ADC_START_(job0)      
+                     10u
+                      d6
+                     10u     ADC_END_(job0)
+                  d7m10u
+      }
+      else
+      {
+                      d5     ADC_START_(job0)     grad_shape<xyzb0>{g0*Shape2()*ProjR, g1*Shape2()*ProjP, -g2*Shape2()*ProjS, Shape2()*Proj3D}
+                     10u
+                      d6                        grad_shape<xyzb0>{g3*Shape3()*ProjR, g4*Shape3()*ProjP, -g5*Shape3()*ProjS, Shape3()*Proj3DRew}
+                     10u     ADC_END_(job0)
+                  d7m10u
+      }
+    }
+
+                             ADC_INIT_(job0, ph1, ph0)
+ 
+    if(ACQ_scan_type == Setup_Experiment)
+    {
+                      d4     ADC_START_(job0)
+    }
+    else
+    {
+                      d4     ADC_START_(job0)     grad_shape<xyzb0>{g0*Shape1()*ProjR, g1*Shape1()*ProjP, -g2*Shape1()*ProjS, Shape1()*Proj3D}
+    }
+
+                      d1     grad_off<xyzb0>
+                      5u    ADC_END_(job0)
+                      5u    update_interactive_parameters  
+                      d0
+    ;-------------------projection loop-----------------------
+                      0u     ProjR.inc
+                      0u     ProjP.inc
+                      0u     ProjS.inc
+                      0u     Proj3D.inc
+                      0u     Proj3DRew.inc
+  }
+
+  subroutine segmentDummy()
+  {
+    ;-------------------slice selection-----------------------
+                      10u  freqTx:f1   
+                     (p0:sp0 ph1):f1
+                      d3
+    ;-------------------dual echo-----------------------------
+    if(DualEcho == Yes)
+    {
+                      de
+
+      if(ACQ_scan_type == Setup_Experiment)
+      {
+                      d5
+                     10u
+                      d6
+                      d7
+      }
+      else
+      {
+                      d5     grad_shape{g0*Shape2()*ProjR, g1*Shape2()*ProjP, -g2*Shape2()*ProjS}
+                     10u
+                      d6     grad_shape{g3*Shape3()*ProjR, g4*Shape3()*ProjP, -g5*Shape3()*ProjS}
+                      d7
+      }
+    }
+                      de
+
+    if(ACQ_scan_type == Setup_Experiment)
+    {
+                      d4     
+    }
+    else
+    {
+                      d4     grad_shape{g0*Shape1()*ProjR, g1*Shape1()*ProjP, -g2*Shape1()*ProjS}           
+    }
+                      d1     grad_off   
+                      10u
+                      d0
+  }
+
+#include "Segmentation.mod"
+
+  ;===========================================================
+  ;   pulse program
+  ;===========================================================
+
+                             subr SatTransInit()
+
+  ;---------------------initial dummies-----------------------
+  if (ACQ_scan_type == Scan_Experiment)
+  {
+                             subr segmentationDummy(PVM_DummyScans)
+  }
+  start,             0u
+                             subr segmentationPrep()
+                             subr segmentationAcquire(start)
+                             subr SatTransInc()
+
+  lo to start times NR
+  SETUP_GOTO(start) 
+  ; don't use exit inside if/else blocks, instead QUIT
+  ; and EXIT at end of pulse program
+  QUIT
+}
+
+EXIT
+;=============================================================
+;phase lists
+
+ph0 = 0
+ph1 = 0 
+;=============================================================

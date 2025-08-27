@@ -1,0 +1,26 @@
+##TITLE=Parameter List, ParaVision 360 V3.6
+##JCAMPDX=4.24
+##DATATYPE=Parameter Values
+##ORIGIN=Bruker BioSpin GmbH & Co. KG
+##OWNER=nmrsu
+$$ Write Options: Symbolic Enums, RLE encoded arrays
+$$ 2024-07-25 10:07:43.100 +0200  nmrsu@host
+$$ /opt/nmrdata/PV-360.3.6/data/nmrsu/20240725_090212_std_PV360_3_6_94T_protocols_1_1/20/AdjStatePerScan
+$$ process /opt/PV-360.3.6/prog/bin/parxserver
+##$AdjScanStateCompleted=No
+##$AdjScanStateAdjName=( 1, 128 )
+<RCVR_Standard>
+##$AdjScanStateTime=( 1 )
+<2024-07-25T10:07:38,897+0200>
+##$AdjScanStateExpno=( 1 )
+20
+##$AdjScanStateState=( 1 )
+adj_successful
+##$AdjScanStateResultId=( 1, 65 )
+<2.16.756.5.5.200.906653985.1404.1721894854.1563>
+##$AdjScanStateMethod=( 1, 128 )
+<Bruker:DtiEpi>
+##$AdjScanStateModality=( 1 )
+MR_Modality
+##END=
+$$ File finished by PARX at 2024-07-25 10:07:43.100 +0200

@@ -1,0 +1,1443 @@
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+;****************************************************************
+;
+; Copyright (c) 2021
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; UTE3D - A 3D Radial Imaging Pulse Program
+;
+;****************************************************************
+
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include" 1
+;****************************************************************
+;
+; Copyright (c) 2018-2021
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+;****************************************************************
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Avance.incl" 1
+;Avance4.incl
+;   for AV 4
+;
+;avance-version (16/08/18)
+;
+;$CLASS=Common Incl
+;$COMMENT=
+
+
+# 19 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Avance.incl"
+;setrtp0 denotes TimingController
+
+
+# 50 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Avance.incl"
+# 51 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Avance.incl"
+
+
+# 63 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Avance.incl"
+# 89 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Avance.incl"
+# 90 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Avance.incl"
+
+
+# 123 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Avance.incl"
+;#define LOWQ
+;#define HIGHQ
+
+
+;#define MIX_UP
+;#define MIX_DOWN
+# 136 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Avance.incl"
+;$Id:$
+# 15 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include" 2
+
+
+define delay adcEndInfoTagDel
+define delay rde1
+# 20 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+"rde1=de-de1"
+
+
+; Remark:  is the string concatenation mode for cpp with traditional option
+# 27 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+	
+
+
+	
+subroutine InitGradients
+subroutine InitDevices_NoGradients
+subroutine InitDevices
+subroutine UpdateDynPars_30s
+subroutine SetupGoTo
+subroutine AdcEnd_InfoTag
+# 14 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg" 2
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2003-2007
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; Declaration of pulseprogram parameters and subroutines for 
+; preparation  modules
+;
+; Must be included after MRI.include!
+;
+;****************************************************************
+
+;**** Fat Suppression ****
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/FatSup.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; FatSup.mod : Declaration of Fat Suppression Subroutine
+;
+;****************************************************************
+
+if (PVM_FatSupPerform == Yes)
+{
+  define pulse           fatSupPul   = {$PVM_FatSupRfLength}
+  define list<frequency> fatSupList  = {$PVM_FatSupFL}
+  
+  define delay fatSupRamp  = {$PVM_FatSupRampTime}
+  define delay fatSupWait  = {$PVM_FatSupGradWait}
+  define delay fatSupSpoil = {$PVM_FatSupSpoilDur}
+
+  ; convert from ms to s
+  "fatSupRamp  = fatSupRamp  / 1000"
+  "fatSupWait  = fatSupWait  / 1000"
+  "fatSupSpoil = fatSupSpoil / 1000"
+}
+subroutine FatSup
+# 21 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+
+;**** Flow Saturation ****
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/FlowSat.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; FlowSat.mod: Declaration of subroutines for Flow Saturation 
+; call
+; subr FlowSat()
+; subr FlowSatInit()
+; subr FlowSatInc()
+; 
+;****************************************************************
+
+if(PVM_InFlowSatOnOff == 1)
+{
+define list<frequency> modlis4 = {$PVM_InFlowSatFL}
+define list<grad_scalar> flowSatGrad={$PVM_InFlowSatGrad}
+
+define delay SfD0 = {$PVM_SfD0}
+define delay SfD2 = {$PVM_SfD2}
+# 27 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/FlowSat.mod"
+define pulse SfP0 = {$PVM_SfP0}
+define loopcounter SfLp0 = {$PVM_SfLp0}
+}
+
+
+subroutine FlowSat
+subroutine FlowSatInc
+subroutine FlowSatInit
+# 25 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+
+;**** Saturation Transfer ****
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/SatTrans.mod" 1
+;****************************************************************
+; $Source$
+;
+; Copyright (c) 2023
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; SatTrans.mod: Declaration of subroutine for Saturation transfer 
+; call
+; subr SatTrans()
+;
+; $Id$
+;****************************************************************
+;**** Saturation Transfer Module ****
+
+
+; PVM_SatTransFL:        List of offset frequencies to be measured.
+; PVM_SattransNPulses:   Number of pulses used in one saturation event
+; PVM_SattransPowerList: List of RF amplitudes for saturation pulses.
+;                        Two elements long: first element: 0 Watt,
+;                        used for one reference scan. Subsequent scans
+;                        use amplitude as specified in UI.
+; StRepCntr:             If Reference Scan is 'On' two power switch cmds
+;                        are required: before & after RefScan. Incrementing
+;                        counter with repetitions and resetting it to zero
+;                        when StReps is reached, this happens for cntr vals
+;                        0 & 1.
+# 32 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/SatTrans.mod"
+if(PVM_SatTransOnOff)
+{
+  define list<frequency> modlis5    = {$PVM_SatTransFL}
+  define list<power> StRfPower      = {$PVM_SatTransPowerList}
+             
+  define delay StD0                 = {$PVM_StD0}
+  define delay StD1                 = {$PVM_StD1}
+  define delay StD2                 = {$PVM_StD2}
+  define delay StD3                 = {$PVM_StD3}
+
+  define pulse StP0                 = {$PVM_StP0}
+
+  define loopcounter StNPulses      = {$PVM_SatTransNPulses}
+  define loopcounter StReps         = {$PVM_SatTransRepetitions}
+# 47 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/SatTrans.mod"
+  define loopcounter StRepCntr
+  "StRepCntr = 0"
+}
+
+subroutine SatTransInit
+
+subroutine SatTransInc
+subroutine SatTrans
+# 29 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+
+;*** FOV Saturation ***
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/FovSat.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; FovSat.mod : Declaration of FOV Saturation subroutine
+; call: subr FovSat()
+;
+;****************************************************************
+
+
+if (PVM_FovSatOnOff == On)
+{
+  define pulse           fovSatPul   = {$PVM_FovSatRfLength}
+  define list<frequency> fovSatList  = {$PVM_FovSatFL}
+  
+  define delay fovSatRamp  = {$PVM_FovSatRampTime}
+  define delay fovSatWait  = {$PVM_FovSatGradWait}
+  define delay fovSatSpoil = {$PVM_FovSatSpoilDur}
+# 26 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/FovSat.mod"
+  ; convert from ms to s
+  "fovSatRamp  = fovSatRamp  / 1000"
+  "fovSatWait  = fovSatWait  / 1000"
+  "fovSatSpoil = fovSatSpoil / 1000"  
+}
+
+subroutine FovSat
+
+# 33 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+
+;**** Black Blood ****
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/BlBlood.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; BlBlood.mod : Declaration of Black blood  subroutine
+;
+; call
+; subr BlBlood(ph0) : Black blood preparation with RF phaselist
+;                     ph0
+;
+;****************************************************************
+
+if(PVM_BlBloodOnOff)
+{
+define list<frequency> modlis8 = {$PVM_BlBloodFL}
+define delay BlbD0 = {$PVM_BlbD0}
+define delay BlbD1 = {$PVM_BlbD1}
+define delay BlbD2 = {$PVM_BlbD2}
+
+define pulse BlbP0 = {$PVM_BlbP0}
+}
+subroutine BlBlood
+# 37 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+
+;**** Trigger ****
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trigger.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; Trigger.mod - Trigger Module
+;
+;****************************************************************
+
+if (PVM_TriggerModule == On)
+{
+  define delay trigDur = {$PVM_TriggerDur}
+  define delay trigDel = {$PVM_TriggerDelay}
+
+  ; convert from ms to s
+  "trigDur = trigDur / 1000"
+  "trigDel = trigDel / 1000"
+}
+subroutine Trigger
+subroutine TriggerPhase
+subroutine TriggerSlice
+# 41 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+
+;**** Trigger Out ****
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/TriggerOut.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+; $Id$
+;****************************************************************
+
+if (PVM_TriggerOutOnOff == On)
+{
+  define delay trigOutDur = {$PVM_TriggerOutDur}
+  define delay trigOutDel = {$PVM_TriggerOutDelay}
+
+  ; convert from ms to s
+  "trigOutDur = trigOutDur / 1000"
+  "trigOutDel = trigOutDel / 1000"
+}
+subroutine TriggerOut
+subroutine TriggerOutStart
+subroutine TriggerOutSlice
+subroutine TriggerOutVolume
+# 45 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+
+;**** Outer Volume Suppression ****
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/WsOvs.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; WsOvs.mod: Declaration of water suppression and Outer 
+;            volume suppression subroutines
+;
+; call 
+; subr Ovs(ph0) ;  execution of OVS with ph0 phaselist
+;
+; subr WsOvs(ph0,ph1) : execution of OVS with ph0 and WS with ph1
+;                       phaselist
+;****************************************************************
+
+;**** OuterVolumeSuppression ****
+
+if(PVM_OvsOnOff == 1)
+{
+define list<frequency> Ovslist={$PVM_OvsFrequencyList}
+define delay OvsD0 = {$PVM_OvsD0}
+define delay OvsD1 = {$PVM_OvsD1}
+define pulse OvsP0 = {$PVM_OvsP0}
+}
+subroutine Ovs
+# 62 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/WsOvs.mod"
+;*** WaterSuppression Module with OVS ****
+
+if (PVM_WsMode)
+{
+
+define list<frequency> Wslist={$PVM_WsOffsetHz}
+define pulse WsP0 = {$PVM_WsP0}
+define pulse WsP1 = {$PVM_WsP1}
+define pulse WsP2 = {$PVM_WsP2}
+define delay WsNp0 
+"WsNp0 = WsP0"
+define delay WsNp1 
+"WsNp1 = WsP1"
+define delay WsNp2 
+"WsNp2 = WsP2"
+define list<delay> ChD1={$PVM_ChppgD1}
+define list<delay> ChD2={$PVM_ChppgD2}
+define list<delay> VpD1={$PVM_VpppgD1}
+define list<delay> VpD2={$PVM_VpppgD2}
+# 82 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/WsOvs.mod"
+}
+
+
+subroutine WsOvsMain
+subroutine WsOvs
+subroutine Ws
+# 49 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+
+;**** Solvent Suppression module ****
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/WsSat.mod" 1
+;******************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; $Id$ 
+;
+; All Rights Reserved
+;
+; WsSat.mod - Declaration of water suppression and FOV saturation 
+;             subroutines
+; call
+; subr WsSat(ph0) : execution of WS with ph0 phaselist and 
+;                   FOV saturation (as passed as argument)    
+;      
+;*******************************************************************
+
+
+; Definitions for WsPpgParams are included in WsOvs.mod
+subroutine WsSatMain
+subroutine WsSat
+# 53 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+
+;**** Selective Inversion Recovery ****
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/SliceSelIr.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; SlicelSelIr.mod : declaration of slice Selective Inversion 
+;                   Recovery subroutine
+; call SliceSelIr()
+; 
+;
+;****************************************************************
+
+
+if(PVM_SelIrOnOff)
+{
+  define list<frequency> IrFL = {$PVM_SelIrFL} 
+  define delay IrD0 = {$PVM_SelIrD0} ; PVM_InterInvDelay
+  define delay IrD1 = {$PVM_SelIrD1} ; PVM_InterInvEndDelay[0]
+  define delay IrD2 = {$PVM_SelIrD2} ; Spoiler duration
+  define delay IrD4 = {$PVM_SelIrD4} ; risetime
+# 27 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/SliceSelIr.mod"
+  define pulse IrP0 = {$PVM_SelIrP0}
+  define loopcounter IrL0 = {$PVM_SelIrL0}
+  define loopcounter IrL1
+}
+
+subroutine SliceSelIr
+
+# 57 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+
+;**** Tagging ****
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Tagging.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2007
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; Tagging.mod : Declaration of tagging subroutine
+; call
+; subr Tagging()
+;
+;****************************************************************
+
+if(PVM_TaggingOnOff)
+{
+define list<frequency> taggfreq={$PVM_TaggingFL}
+
+define delay TaggD0 = {$PVM_TaggingD0}
+define delay TaggD1 = {$PVM_TaggingD1}
+define delay TaggD2 = {$PVM_TaggingD2}
+define delay TaggD3 = {$PVM_TaggingD3}
+define delay TaggD4 = {$PVM_TaggingD4}
+# 27 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Tagging.mod"
+define pulse TaggP0 = {$PVM_TaggingP0}
+define loopcounter TaggL0 = {$PVM_TaggingLp0}
+}
+
+subroutine Tagging
+
+# 61 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+
+;**** Noe ****
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Noe.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; Noe.mod: Declaration of Nuclear Overhouser Enhancement 
+;             subroutine
+; call
+; subr Noe()
+;
+;****************************************************************
+
+if(PVM_NoeOnOff == On)
+{
+define delay NoeD0 = {$PVM_NoeD0}
+define delay NoeD1 = {$PVM_NoeD1}
+}
+
+subroutine Noe
+# 65 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+
+;**** Evolution ****
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Evolution.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; Evolution.mod - Evolution Module
+;
+;****************************************************************
+
+if (PVM_EvolutionOnOff == On)
+{
+  define delay       evolDel  = {$PVM_EvolutionDelay}
+  define list<delay> evolTime = {$PVM_EvolutionTime}
+}
+
+subroutine Evolution
+# 69 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+
+;**** Drift Compensation ****
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/DriftComp.mod" 1
+;==========================================================
+;   subroutine for drift compensation
+;==========================================================
+
+
+if (PVM_DriftCompNavOnOff == On)
+{
+  define list<frequency> tx_drift_fq = {$PVM_DriftCompNavTxFrq}
+  define list<frequency> rx_drift_fq = {$PVM_DriftCompNavRxFrq}
+  define pulse DCP0 = {$PVM_DriftCompNavP0}     
+  define delay DCD1 = {$PVM_DriftCompNavD1}
+  define delay DCD2 = {$PVM_DriftCompNavD2}
+  define delay DCD3 = {$PVM_DriftCompNavD3}
+  define delay DCD4 = {$PVM_DriftCompNavD4}
+  define delay DCD5 = {$PVM_DriftCompNavD5}
+  define delay DCD6
+  "DCD6 = 20u - de"
+  define list<phase> dcph = { 0 }
+}
+subroutine DriftComp
+# 73 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/PrepModulesHead.mod" 2
+# 15 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg" 2
+
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2021
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; All Rights Reserved
+;
+; Trajectory Measurement Module
+;
+;****************************************************************
+
+;*******************************************************************************
+;	gradient shapes for gradientMode = 1,2 (shape)
+;*******************************************************************************
+# 28 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+# 29 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+
+# 42 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+  
+# 55 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+
+# 68 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+# 72 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+;*******************************************************************************
+;	internal subroutines
+;*******************************************************************************
+
+; gradientMode = 0
+; make sure all subroutines exist (first definition is used)
+subroutine trajTestOn
+
+subroutine trajTestOff
+subroutine trajIncr
+# 88 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+define list<grad_scalar> PVM_TrajInt1r
+define list<grad_scalar> PVM_TrajInt2r
+define list<grad_scalar> PVM_TrajInt3r
+define list<grad_scalar> PVM_TrajInt1p
+define list<grad_scalar> PVM_TrajInt2p
+define list<grad_scalar> PVM_TrajInt3p
+define list<grad_scalar> PVM_TrajInt1s
+define list<grad_scalar> PVM_TrajInt2s
+define list<grad_scalar> PVM_TrajInt3s
+define list<grad_scalar> PVM_TrajAxisX
+define list<grad_scalar> PVM_TrajAxisY
+define list<grad_scalar> PVM_TrajAxisZ
+define list<grad_scalar> PVM_TrajReadOffsetHzFac
+define list<grad_scalar> PVM_TrajPhase1OffsetHzFac
+define list<grad_scalar> PVM_TrajSliceOffsetHzFac
+            
+; general interleave increment
+subroutine trajIncrement
+
+
+# 125 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+;*******************************************************************************
+;	external subroutine
+;*******************************************************************************
+
+subroutine trajPerform
+
+# 16 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg" 2
+
+define list<grad_shape> Shape1={$GradShape1}
+define list<grad_shape> Shape2={$GradShape2}
+define list<grad_shape> Shape3={$GradShape3}
+define list<frequency> freqTx = {$ACQ_O1_list}
+
+define delay d7m10u
+"d7m10u = d7 -10u"
+# 25 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+;============================================================
+if (PVM_TrajAdjustmentRunning == Yes)
+{ 
+  subr trajPerform
+;EXEC_begin trajPerform trajPerform()
+# 130 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+ 
+;===============================================================================
+;	set parameters
+;===============================================================================
+
+  define list<frequency> trajList = {$PVM_TrajFreqList}
+
+  define delay trajRfc1
+  define delay trajRfc2   = {$PVM_TrajRfcSpoilDur}
+  define delay trajTErfc  = {$PVM_TrajTEWaitRfc}
+  define delay trajGrad   = {$PVM_TrajGradWait}
+  define delay trajTrig   = {$PVM_TrajTrigDelay}
+  define delay trajRep    = {$PVM_TrajRepDelay}
+  define delay trajRise   = {$PVM_TrajRiseTime}
+  define delay trajReph   = {$PVM_TrajSliceRephase}
+  define delay trajSpoil  = {$PVM_TrajSpoilDur}
+  define delay trajTE     = {$PVM_TrajTEWait}
+  define delay trajAcq    = {$PVM_TrajAcq}
+  define delay trajAcqDel = {$PVM_TrajAcqDel}
+  define delay trajAcqEnd = {$PVM_TrajAcqEnd}
+  ; convert to s (order matters!)
+  "trajRfc1   = trajRfc2             * 0.001"
+  "trajRfc2   = trajRfc2             * 0.001"
+  "trajTErfc  = trajTErfc            * 0.001"
+  "trajGrad   = trajGrad             * 0.001"
+  "trajTrig   = trajTrig             * 0.001"
+  "trajRep    = trajRep              * 0.001"
+  "trajRise   = trajRise             * 0.001"
+  "trajReph   = trajReph             * 0.001"
+  "trajSpoil  = trajSpoil            * 0.001"
+  "trajTE     = trajTE               * 0.001"
+  "trajAcq    = trajAcq              * 0.001"
+  "trajAcqDel = trajAcqDel           * 0.001"
+  "trajAcqEnd = trajAcqEnd           * 0.001"
+
+  define loopcounter trajLocs  = {$PVM_TrajLocs}
+  define loopcounter trajInts  = {$PVM_TrajInterleaves}
+  define loopcounter trajAxes  = {$PVM_TrajAxes}
+
+  "l0 = 0"                          ; count scans (reference / test)
+  define list<grad_scalar, 2> step  ; weight scans (reference / test)
+
+;===============================================================================
+;   D/P                  spec control            gradients
+;===============================================================================
+
+  
+;EXEC_begin InitDevices InitDevices()
+# 75 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+ 
+    
+;EXEC_begin InitGradients InitGradients()
+# 60 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+ 
+    define list <grad_index> xyzb0 = {0 1 2 3}
+    1m sync_grad 100
+    10u ctrlgrad 0  
+    1m shim_off  
+ 
+;EXEC_end   InitGradients
+# 77 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+    
+;EXEC_begin InitDevices_NoGradients InitDevices_NoGradients()
+# 69 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+ 
+    2u h2pulse       ;SEL_2H plus interleave_incr
+ 
+;EXEC_end   InitDevices_NoGradients
+# 78 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+ 
+;EXEC_end   InitDevices
+# 177 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+
+  start18,
+    trajRep                 trajList:f1
+
+;----------------------------------trigger--------------------------------------
+
+    if (PVM_TrajTrig == On)
+    {
+      trajTrig            trignl1
+    }
+
+    if (PVM_TrajGradSync == Yes)
+    {
+      1u	            trigpe3
+    }
+;----------------------------------slice selection------------------------------
+
+    trajRise                                        grad_ramp<magnet_coord> { PVM_TrajSliceGradX * PVM_TrajAxisX,                                                                               PVM_TrajSliceGradY * PVM_TrajAxisY,                                                                               PVM_TrajSliceGradZ * PVM_TrajAxisZ }
+
+
+
+                            (p0:sp0):f1
+    trajRise                                        grad_off
+    trajReph                                        grad_ramp<magnet_coord> { PVM_TrajSliceRephaseGradX * PVM_TrajAxisX,                                                                               PVM_TrajSliceRephaseGradY * PVM_TrajAxisY,                                                                               PVM_TrajSliceRephaseGradZ * PVM_TrajAxisZ }
+
+
+    trajRise                                        grad_off
+    trajGrad
+    trajTE
+
+;----------------------------------refocusing ----------------------------------
+
+    if (PVM_TrajSignalType == SignalType_Echo)
+    {
+      trajRfc1                                      grad_ramp<magnet_coord> { PVM_TrajRfcSpoilGrad * PVM_TrajAxisX,                                                                               PVM_TrajRfcSpoilGrad * PVM_TrajAxisY,                                                                               PVM_TrajRfcSpoilGrad * PVM_TrajAxisZ }
+
+
+
+      trajRise                                      grad_ramp<magnet_coord> { PVM_TrajSliceGradX * PVM_TrajAxisX,                                                                               PVM_TrajSliceGradY * PVM_TrajAxisY,                                                                               PVM_TrajSliceGradZ * PVM_TrajAxisZ }
+
+
+
+                            (p1:sp1 ph1):f1
+      trajRfc2                                      grad_ramp<magnet_coord> { PVM_TrajRfcSpoilGrad * PVM_TrajAxisX,                                                                               PVM_TrajRfcSpoilGrad * PVM_TrajAxisY,                                                                               PVM_TrajRfcSpoilGrad * PVM_TrajAxisZ }
+
+
+      trajRise                                      grad_off
+      trajGrad
+      trajTErfc
+    }
+
+;----------------------------------acquisition of test shape--------------------
+
+    if (PVM_TrajGradMode == 0)
+    {
+      if "l0 == 0" goto test_off19
+      
+;EXEC_begin trajTestOn trajTestOn(phase ph0, phase ph0)
+# 79 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+ 
+ 
+;EXEC_end   trajTestOn
+# 234 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+      goto test_end20
+    test_off19,
+      
+;EXEC_begin trajTestOff trajTestOff(phase ph0, phase ph0)
+# 82 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+ 
+ 
+;EXEC_end   trajTestOff
+# 237 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+    test_end20,
+    }
+    else
+    {
+                            (rde1 de1 adc_job0   ph0 syrec_job0 ) (1u 1u   ph0:r):f_job0
+
+      if (PVM_TrajIntMode == Traj_IntAll)
+      {
+        trajAcq             dwgen_job0          grad_shape<xyzb0, rps_coord>    { PVM_TrajShape1() * PVM_TrajGradR * PVM_TrajInt1r * step   + PVM_TrajShape2() * PVM_TrajGradR * PVM_TrajInt2r * step   + PVM_TrajShape3() * PVM_TrajGradR * PVM_TrajInt3r * step, PVM_TrajShape1() * PVM_TrajGradP * PVM_TrajInt1p * step   + PVM_TrajShape2() * PVM_TrajGradP * PVM_TrajInt2p * step   + PVM_TrajShape3() * PVM_TrajGradP * PVM_TrajInt3p * step, PVM_TrajShape1() * PVM_TrajGradS * PVM_TrajInt1s * step   + PVM_TrajShape2() * PVM_TrajGradS * PVM_TrajInt2s * step   + PVM_TrajShape3() * PVM_TrajGradS * PVM_TrajInt3s * step, PVM_TrajReadOffsetHzFac * PVM_TrajShape1() * PVM_TrajGradR * PVM_TrajInt1r * step   + PVM_TrajReadOffsetHzFac * PVM_TrajShape2() * PVM_TrajGradR * PVM_TrajInt2r * step   + PVM_TrajReadOffsetHzFac * PVM_TrajShape3() * PVM_TrajGradR * PVM_TrajInt3r * step + PVM_TrajPhase1OffsetHzFac * PVM_TrajShape1() * PVM_TrajGradP * PVM_TrajInt1p * step   + PVM_TrajPhase1OffsetHzFac * PVM_TrajShape2() * PVM_TrajGradP * PVM_TrajInt2p * step   + PVM_TrajPhase1OffsetHzFac * PVM_TrajShape3() * PVM_TrajGradP * PVM_TrajInt3p * step + PVM_TrajSliceOffsetHzFac * PVM_TrajShape1() * PVM_TrajGradS * PVM_TrajInt1s * step   + PVM_TrajSliceOffsetHzFac * PVM_TrajShape2() * PVM_TrajGradS * PVM_TrajInt2s * step   + PVM_TrajSliceOffsetHzFac * PVM_TrajShape3() * PVM_TrajGradS * PVM_TrajInt3s * step }
+      }
+      else
+      {
+        trajAcq             dwgen_job0         grad_shape<xyzb0, magnet_coord> { PVM_TrajShape1() * PVM_TrajGradX * PVM_TrajInt1r * PVM_TrajAxisX * step   + PVM_TrajShape2() * PVM_TrajGradX * PVM_TrajInt2r * PVM_TrajAxisX * step   + PVM_TrajShape3() * PVM_TrajGradX * PVM_TrajInt3r * PVM_TrajAxisX * step, PVM_TrajShape1() * PVM_TrajGradY * PVM_TrajInt1p * PVM_TrajAxisY * step   + PVM_TrajShape2() * PVM_TrajGradY * PVM_TrajInt2p * PVM_TrajAxisY * step   + PVM_TrajShape3() * PVM_TrajGradY * PVM_TrajInt3p * PVM_TrajAxisY * step, PVM_TrajShape1() * PVM_TrajGradZ * PVM_TrajInt1s * PVM_TrajAxisZ * step   + PVM_TrajShape2() * PVM_TrajGradZ * PVM_TrajInt2s * PVM_TrajAxisZ * step   + PVM_TrajShape3() * PVM_TrajGradZ * PVM_TrajInt3s * PVM_TrajAxisZ * step, PVM_TrajXOffsetHzFac * PVM_TrajShape1() * PVM_TrajGradX * PVM_TrajInt1r * PVM_TrajAxisX * step   + PVM_TrajXOffsetHzFac * PVM_TrajShape2() * PVM_TrajGradX * PVM_TrajInt2r * PVM_TrajAxisX * step   + PVM_TrajXOffsetHzFac * PVM_TrajShape3() * PVM_TrajGradX * PVM_TrajInt3r * PVM_TrajAxisX * step + PVM_TrajYOffsetHzFac * PVM_TrajShape1() * PVM_TrajGradY * PVM_TrajInt1p * PVM_TrajAxisY * step   + PVM_TrajYOffsetHzFac * PVM_TrajShape2() * PVM_TrajGradY * PVM_TrajInt2p * PVM_TrajAxisY * step   + PVM_TrajYOffsetHzFac * PVM_TrajShape3() * PVM_TrajGradY * PVM_TrajInt3p * PVM_TrajAxisY * step + PVM_TrajZOffsetHzFac * PVM_TrajShape1() * PVM_TrajGradZ * PVM_TrajInt1s * PVM_TrajAxisZ * step   + PVM_TrajZOffsetHzFac * PVM_TrajShape2() * PVM_TrajGradZ * PVM_TrajInt2s * PVM_TrajAxisZ * step   + PVM_TrajZOffsetHzFac * PVM_TrajShape3() * PVM_TrajGradZ * PVM_TrajInt3s * PVM_TrajAxisZ * step }
+      }
+      trajAcqDel                                    grad_off < xyzb0 >
+      trajAcqEnd            eoscnpzbwrif_job0
+    }
+
+;----------------------------------slice spoiler--------------------------------
+
+    trajSpoil                                       grad_ramp<magnet_coord> { PVM_TrajSpoilGrad * PVM_TrajAxisX,                                                                               PVM_TrajSpoilGrad * PVM_TrajAxisY,                                                                               PVM_TrajSpoilGrad * PVM_TrajAxisZ }
+
+
+    trajRise                                        grad_off
+
+;----------------------------------loop slice position--------------------------
+    0u                      trajList.inc
+  lo to start18 times trajLocs
+
+; rewind frequency list
+  freq121,
+    0u                      trajList.dec
+  lo to freq121 times trajLocs
+;----------------------------------loop scans-----------------------------------
+; reference scan only for first interleave
+    if "l0 != 0" goto scans_end22
+      0u                   iu0
+      0u                   step.inc
+      goto start18
+    scans_end22,
+;----------------------------------loop interleaves-----------------------------
+    if (PVM_TrajInterleaves > 1)
+    {
+      
+;EXEC_begin trajIncrement trajIncrement()
+# 106 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+ 
+  if (PVM_TrajGradMode == 0)
+  {
+    
+;EXEC_begin trajIncr trajIncr()
+# 85 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+ 
+ 
+;EXEC_end   trajIncr
+# 110 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+  }
+  else
+  {
+    0u    PVM_TrajInt1r.inc
+    0u    PVM_TrajInt2r.inc
+    0u    PVM_TrajInt3r.inc
+    0u    PVM_TrajInt1p.inc
+    0u    PVM_TrajInt2p.inc
+    0u    PVM_TrajInt3p.inc
+    0u    PVM_TrajInt1s.inc
+    0u    PVM_TrajInt2s.inc
+    0u    PVM_TrajInt3s.inc
+  }
+ 
+;EXEC_end   trajIncrement
+# 281 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+      lo to start18 times trajInts
+    }
+;----------------------------------loop axes------------------------------------
+    0u                                              grad_matrix.inc
+    0u                                              PVM_TrajAxisX.inc
+    0u                                              PVM_TrajAxisY.inc
+    0u                                              PVM_TrajAxisZ.inc
+; advance frequency list
+  freq223,
+    0u                      trajList.inc
+  lo to freq223 times trajLocs
+; reset scans
+    "l0 = 0"
+    0u                                             step.res
+    0u                                              PVM_TrajReadOffsetHzFac.inc
+    0u                                              PVM_TrajPhase1OffsetHzFac.inc
+    0u                                              PVM_TrajSliceOffsetHzFac.inc
+  lo to start18 times trajAxes
+;----------------------------------loop averages--------------------------------
+  lo to start18 times NA
+
+  
+;EXEC_begin SetupGoTo SetupGoTo(any start)
+# 90 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+ 
+    if (ACQ_scan_type != Scan_Experiment)
+    {
+        goto start18
+    }
+ 
+;EXEC_end   SetupGoTo
+# 303 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trajectory.mod"
+  ; do not use exit in modules
+  ; instead use goto EXIT_LABEL in combination with EXIT_LABEL, exit in main pulse program
+  goto EXIT_LABEL
+ 
+;EXEC_end   trajPerform
+# 29 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+}
+else
+{
+  define list<grad_scalar> ProjR={$GradAmpR}
+  define list<grad_scalar> ProjP={$GradAmpP}
+  define list<grad_scalar> ProjS={$GradAmpS}
+  define list<grad_scalar> Proj3D={$Proj3DOffsetHzFac}  
+  define list<grad_scalar> Proj3DRew={$Proj3DRewOffsetHzFac}  
+
+  ;===========================================================
+  ;   declaration of loops
+  ;===========================================================
+
+  grad_zero_for_gs <ProjR,ProjP,ProjS,Proj3D,Proj3DRew>
+# 44 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+  ProjR.res
+  ProjP.res
+  ProjS.res
+  Proj3D.res
+  Proj3DRew.res
+subr InitDevices
+;EXEC_begin InitDevices InitDevices()
+# 75 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+ 
+    
+;EXEC_begin InitGradients InitGradients()
+# 60 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+ 
+    define list <grad_index> xyzb0 = {0 1 2 3}
+    1m sync_grad 100
+    10u ctrlgrad 0  
+    1m shim_off  
+ 
+;EXEC_end   InitGradients
+# 77 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+    
+;EXEC_begin InitDevices_NoGradients InitDevices_NoGradients()
+# 69 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+ 
+    2u h2pulse       ;SEL_2H plus interleave_incr
+ 
+;EXEC_end   InitDevices_NoGradients
+# 78 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+ 
+;EXEC_end   InitDevices
+# 50 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+
+
+  ;===========================================================
+  ;   segmented preparation
+  ;===========================================================
+subroutine segmentPrep
+subroutine segmentAcquire
+subroutine segmentDummy
+# 1 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Segmentation.mod" 1
+;****************************************************************
+;
+; Copyright (c) 2018
+; Bruker BioSpin GmbH & Co. KG
+; D-76275 Ettlingen, Germany
+;
+; $Id$
+;
+; All Rights Reserved
+;
+; Segmentation.mod : module for segmented preparation
+;
+;****************************************************************
+
+;****************************************************************
+;
+; How to use the segmentation module in the pulse program:
+;
+; 1) create the subroutines
+;    - segmentPrep(), where preparations are executed
+;    - segmentDummy(), where a dummy short is performed
+;    - segmentAcquire(), where a real acquisition is performed
+; 2) #include "Segmentation.mod"
+; 3) for dummy loops preceding the actual data acquisition use 
+;    - segmentationDummy(nDummies) for dummies without acquisition
+;    - segmentationDummyAcq(nDummies) for dummies with acquisition
+;      (DS > 0)
+; 4) in the acquisition loop call 
+;    - segmentationPrep()
+;    - segmentationAcquire(start)
+;    where "start" is the loop label
+;
+;****************************************************************
+
+define loopcounter segTot  = {$PVM_SegmentationShotsTot}
+define loopcounter segShot = {$PVM_SegmentationShots}
+define loopcounter segSeg  = {$PVM_SegmentationSegmentsN}
+define loopcounter segTotI
+define loopcounter segShotI
+define loopcounter segSegI
+"segTotI = 0"
+"segSegI = 0"
+# 44 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Segmentation.mod"
+if (PVM_SegmentationOnOff == On)
+{
+  define delay segDelay   = {$PVM_SegmentationDelay}  
+  "segDelay   = segDelay   * 0.001"
+}
+
+subroutine segmentationDummyAcq
+
+subroutine segmentationDummy
+subroutine segmentationPrep
+subroutine segmentationAcquire
+# 163 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg" 2
+
+  ;===========================================================
+  ;   pulse program
+  ;===========================================================
+
+                             subr SatTransInit
+;EXEC_begin SatTransInit SatTransInit()
+# 52 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/SatTrans.mod"
+ 
+  if(PVM_SatTransOnOff)
+  {
+              0u    modlis5.res
+              0u    StRfPower.res
+
+              "StRepCntr = 0"
+  }
+ 
+;EXEC_end   SatTransInit
+# 169 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+# 170 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+  ;---------------------initial dummies-----------------------
+  if (ACQ_scan_type == Scan_Experiment)
+  {
+                             subr segmentationDummy
+;EXEC_begin segmentationDummy segmentationDummy(any PVM_DummyScans)
+# 58 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Segmentation.mod"
+ 
+  segDum28,
+    
+;EXEC_begin segmentDummy segmentDummy()
+# 122 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+   
+    ;-------------------slice selection-----------------------
+                      10u  freqTx:f1   
+                     (p0:sp0 ph1):f1
+                      d3
+    ;-------------------dual echo-----------------------------
+    if(DualEcho == Yes)
+    {
+                      de
+
+      if(ACQ_scan_type == Setup_Experiment)
+      {
+                      d5
+                     10u
+                      d6
+                      d7
+      }
+      else
+      {
+                      d5     grad_shape{g0*Shape2()*ProjR, g1*Shape2()*ProjP, -g2*Shape2()*ProjS}
+                     10u
+                      d6     grad_shape{g3*Shape3()*ProjR, g4*Shape3()*ProjP, -g5*Shape3()*ProjS}
+                      d7
+      }
+    }
+                      de
+
+    if(ACQ_scan_type == Setup_Experiment)
+    {
+                      d4     
+    }
+    else
+    {
+                      d4     grad_shape{g0*Shape1()*ProjR, g1*Shape1()*ProjP, -g2*Shape1()*ProjS}           
+    }
+                      d1     grad_off   
+                      10u
+                      d0
+   
+;EXEC_end   segmentDummy
+# 61 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Segmentation.mod"
+  lo to segDum28 times PVM_DummyScans
+  
+;EXEC_end   segmentationDummy
+# 174 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+  }
+  start,             0u
+                             subr segmentationPrep
+;EXEC_begin segmentationPrep segmentationPrep()
+# 65 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Segmentation.mod"
+ 
+  if (PVM_SegmentationOnOff == On)
+  {
+    ; delay (gradient must be off)
+    segDelay groff
+
+    ; preparation
+    
+;EXEC_begin segmentPrep segmentPrep()
+# 56 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+   
+    ;-------------------preparation---------------------------
+                             
+;EXEC_begin TriggerPhase TriggerPhase()
+# 33 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trigger.mod"
+ 
+  if (PVM_TriggerMode == per_PhaseStep)
+  {
+    
+;EXEC_begin Trigger Trigger()
+# 24 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trigger.mod"
+ 
+  if (PVM_TriggerModule == On)
+  {
+    trigDur     trignl1
+    trigDel
+  }
+ 
+;EXEC_end   Trigger
+# 37 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Trigger.mod"
+  }
+ 
+;EXEC_end   TriggerPhase
+# 59 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+     if (GradSync == Yes)
+     {
+                      1u     trigpe3
+     }
+                             
+;EXEC_begin DriftComp DriftComp()
+# 23 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/DriftComp.mod"
+ 
+
+  if(PVM_DriftCompYesNo == Yes)
+  {
+        20u     switch_realtime_tables    ;close to nav acq
+    
+
+    if(PVM_DriftCompNavOnOff == On)
+    {
+        10u     switch_DriftCompensation
+
+       	10u  	rx_drift_fq(receive):f1
+      	 5u  	tx_drift_fq:f1
+
+      (DCP0     :sp55 dcph):f1
+ 
+       DCD6                                              ;is 20u - de
+		(rde1 de1 adc_DriftCompensation   dcph syrec_DriftCompensation ) (1u 1u   dcph:r):f_DriftCompensation ;is de
+       DCD1     dwgen_DriftCompensation
+       169u                               ;delay for scan shift
+        10u     eoscnpzbwrif_DriftCompensation
+
+       DCD2     grad_ramp{PVM_DriftCompNavSpoilAmp,PVM_DriftCompNavSpoilAmp,PVM_DriftCompNavSpoilAmp}
+       DCD3                               ; additional delay after ADC_END requires about 45u
+       DCD4     switch_job0             ; requires about 65u
+       DCD5
+       DCD2     grad_off
+    }
+  }
+
+ 
+;EXEC_end   DriftComp
+# 64 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+                             
+;EXEC_begin FovSat FovSat()
+# 33 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/FovSat.mod"
+ 
+  if (PVM_FovSatOnOff == On)
+  {
+                 5u   PVM_FovSatGrad.res
+                 5u   fovSatList.res
+
+    fov252731, fovSatRamp   grad_ramp<magnet_coord>{PVM_FovSatGrad[]} fovSatList:f1
+         (fovSatPul   :sp41):f1
+        fovSatSpoil   grad_ramp{0, 0, PVM_FovSatSpoilAmp}
+                 0u   fovSatList.inc
+                 0u   PVM_FovSatGrad.inc        
+    lo to fov252731 times PVM_FovSatNSlices
+         
+         fovSatRamp   grad_off
+         fovSatWait
+  }
+ 
+;EXEC_end   FovSat
+# 65 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+                             
+;EXEC_begin SatTrans SatTrans()
+# 91 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/SatTrans.mod"
+ 
+
+  if(PVM_SatTransOnOff)
+  {
+             10u    StRfPower:f1
+     pulse242630, StD1    modlis5:f1
+            StP0:   sp43(currentpower):f1
+
+         lo to pulse242630 times StNPulses
+
+            StD2    grad_ramp{0, 0, PVM_SatTransSpoil.ampl}
+            StD3    groff
+  }
+
+ 
+;EXEC_end   SatTrans
+# 66 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+                             
+;EXEC_begin FatSup FatSup()
+# 31 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/FatSup.mod"
+ 
+  if (PVM_FatSupPerform == Yes)
+  {
+           10u       fatSupList:f1
+    (fatSupPul       :sp40):f1
+   fatSupSpoil       grad_shape {0, 0, PVM_FatSupSpoilAmp}
+    fatSupRamp       grad_off
+    fatSupWait
+  }
+ 
+;EXEC_end   FatSup
+# 67 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+   
+;EXEC_end   segmentPrep
+# 73 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Segmentation.mod"
+    
+    ; dummies
+    segDumPrep29,
+      
+;EXEC_begin segmentDummy segmentDummy()
+# 122 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+   
+    ;-------------------slice selection-----------------------
+                      10u  freqTx:f1   
+                     (p0:sp0 ph1):f1
+                      d3
+    ;-------------------dual echo-----------------------------
+    if(DualEcho == Yes)
+    {
+                      de
+
+      if(ACQ_scan_type == Setup_Experiment)
+      {
+                      d5
+                     10u
+                      d6
+                      d7
+      }
+      else
+      {
+                      d5     grad_shape{g0*Shape2()*ProjR, g1*Shape2()*ProjP, -g2*Shape2()*ProjS}
+                     10u
+                      d6     grad_shape{g3*Shape3()*ProjR, g4*Shape3()*ProjP, -g5*Shape3()*ProjS}
+                      d7
+      }
+    }
+                      de
+
+    if(ACQ_scan_type == Setup_Experiment)
+    {
+                      d4     
+    }
+    else
+    {
+                      d4     grad_shape{g0*Shape1()*ProjR, g1*Shape1()*ProjP, -g2*Shape1()*ProjS}           
+    }
+                      d1     grad_off   
+                      10u
+                      d0
+   
+;EXEC_end   segmentDummy
+# 77 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Segmentation.mod"
+    lo to segDumPrep29 times PVM_SegmentationDummies
+  }
+ 
+;EXEC_end   segmentationPrep
+# 177 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+                             subr segmentationAcquire
+;EXEC_begin segmentationAcquire segmentationAcquire(any start)
+# 82 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Segmentation.mod"
+ 
+  "segShotI = 0"
+  
+  segAcq32,
+    
+;EXEC_begin segmentAcquire segmentAcquire()
+# 70 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+   
+    ;-------------------slice selection-----------------------
+                      10u  freqTx:f1 
+                     (p0:sp0 ph1):f1
+                      d3
+    ;-------------------dual echo-----------------------------
+    if(DualEcho == Yes)
+    {
+                             (rde1 de1 adc_job0   ph1 syrec_job0 ) (1u 1u   ph0:r):f_job0
+
+      if(ACQ_scan_type == Setup_Experiment)
+      {
+                      d5     dwgen_job0      
+                     10u
+                      d6
+                     10u     eoscnpzbwrif_job0
+                  d7m10u
+      }
+      else
+      {
+                      d5     dwgen_job0     grad_shape<xyzb0>{g0*Shape2()*ProjR, g1*Shape2()*ProjP, -g2*Shape2()*ProjS, Shape2()*Proj3D}
+                     10u
+                      d6                        grad_shape<xyzb0>{g3*Shape3()*ProjR, g4*Shape3()*ProjP, -g5*Shape3()*ProjS, Shape3()*Proj3DRew}
+                     10u     eoscnpzbwrif_job0
+                  d7m10u
+      }
+    }
+
+                             (rde1 de1 adc_job0   ph1 syrec_job0 ) (1u 1u   ph0:r):f_job0
+ 
+    if(ACQ_scan_type == Setup_Experiment)
+    {
+                      d4     dwgen_job0
+    }
+    else
+    {
+                      d4     dwgen_job0     grad_shape<xyzb0>{g0*Shape1()*ProjR, g1*Shape1()*ProjP, -g2*Shape1()*ProjS, Shape1()*Proj3D}
+    }
+
+                      d1     grad_off<xyzb0>
+                      5u    eoscnpzbwrif_job0
+                      5u    update_interactive_parameters  
+                      d0
+    ;-------------------projection loop-----------------------
+                      0u     ProjR.inc
+                      0u     ProjP.inc
+                      0u     ProjS.inc
+                      0u     Proj3D.inc
+                      0u     Proj3DRew.inc
+   
+;EXEC_end   segmentAcquire
+# 87 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/Segmentation.mod"
+    
+    "segTotI += 1"
+    if "segTotI >= segTot" goto segEnd33
+  
+    "segShotI += 1"
+    if "segShotI < segShot" goto segAcq32
+  
+    "segSegI += 1"
+    if "segSegI < segSeg" goto start
+
+  segEnd33,
+  "segTotI = 0"
+  "segSegI = 0"
+ 
+;EXEC_end   segmentationAcquire
+# 178 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+                             subr SatTransInc
+;EXEC_begin SatTransInc SatTransInc()
+# 64 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/SatTrans.mod"
+ 
+
+  if(PVM_SatTransOnOff)
+  {
+              0u    modlis5.inc
+
+    if (PVM_SatTransRefScan)
+    {
+       "StRepCntr += 1"
+
+       if "StRepCntr >= StReps"
+       {
+          "StRepCntr = 0"
+       }
+
+       if "{ StRepCntr == 0 } || { StRepCntr == 1 }"
+       {
+              0u    StRfPower.inc
+       }
+
+    }
+  }
+
+ 
+;EXEC_end   SatTransInc
+# 179 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+
+  lo to start times NR
+  subr SetupGoTo
+;EXEC_begin SetupGoTo SetupGoTo(any start)
+# 90 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/MRI.include"
+ 
+    if (ACQ_scan_type != Scan_Experiment)
+    {
+        goto start
+    }
+ 
+;EXEC_end   SetupGoTo
+# 182 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+  ; don't use exit inside if/else blocks, instead QUIT
+  ; and EXIT_LABEL, exit at end of pulse program
+  goto EXIT_LABEL
+}
+
+EXIT_LABEL, exit
+;=============================================================
+;phase lists
+# 191 "/root/.topspin-BladeEpu/local_acqu/tuneDirs/20240725_090212_std_PV360_3_6_94T_protocols_1_1/16/lists/pp/UTE3D.ppg"
+ph0 = 0
+ph1 = 0 
+;=============================================================

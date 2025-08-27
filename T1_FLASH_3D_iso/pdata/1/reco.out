@@ -1,0 +1,13 @@
+##TITLE=Parameter List, ParaVision 360 V3.6
+##JCAMPDX=4.24
+##DATATYPE=Parameter Values
+##ORIGIN=Bruker BioSpin GmbH & Co. KG
+##OWNER=nmrsu
+$$ Write Options: Symbolic Enums, RLE encoded arrays, symbol visibility
+$$ 2024-07-25 09:32:23.914 +0200  nmrsu@host
+$$ /opt/nmrdata/PV-360.3.6/data/nmrsu/20240725_090212_std_PV360_3_6_94T_protocols_1_1/6/pdata/1/reco.out
+$$ process /opt/PV-360.3.6/prog/bin/parxserver
+##$RECO_abs_time=(1721892743, 888, 120)
+$$ @vis= RECO_OUT
+##END=
+$$ File finished by PARX at 2024-07-25 09:32:23.914 +0200

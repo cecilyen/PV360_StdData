@@ -1,0 +1,15 @@
+##TITLE=Parameter List, ParaVision 360 V3.6
+##JCAMPDX=4.24
+##DATATYPE=Parameter Values
+##ORIGIN=Bruker BioSpin GmbH & Co. KG
+##OWNER=nmrsu
+$$ Write Options: Symbolic Enums
+$$ 2024-07-25 09:09:26.235 +0200  nmrsu@host
+$$ /opt/nmrdata/PV-360.3.6/data/nmrsu/20240725_090212_std_PV360_3_6_94T_protocols_1_1/7/pdata/1/id
+$$ process /opt/PV-360.3.6/prog/bin/parxserver
+##$DATASET_KEY=( 65 )
+<2.16.756.5.5.200.906653985.1404.1721891365.240>
+##$DATASET_Modality=MR_Modality
+##$DATASET_ExperimentValid=Yes
+##END=
+$$ File finished by PARX at 2024-07-25 09:09:26.235 +0200

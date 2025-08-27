@@ -1,0 +1,10 @@
+2024/07/25  10:04:17.987  [TRACE]   MrAcqSimulationPlugin: Plugin::init(): started
+2024/07/25  10:04:17.987  [TRACE]   MrAcqSimulationPlugin: SimulationServant_impl::SimulationServant_impl(): started/finished
+2024/07/25  10:04:17.987  [TRACE]   MrAcqSimulationPlugin: Plugin::init(): return true
+2024/07/25  10:04:17.987  [TRACE]   MrAcqSimulationPlugin: Plugin::afterStart(): started
+2024/07/25  10:04:17.987  [TRACE]   MrAcqSimulationPlugin: Plugin::afterStart(): return true
+2024/07/25  10:04:17.987  [INFO]    MxiAcqRecoPlugin: Plugin::init(): run 'reco -psMode 87 -prototypeMode 0 -procnoPath /opt/nmrdata/PV-360.3.6/data/nmrsu/20240725_090212_std_PV360_3_6_94T_protocols_1_1/14/pdata/2 -serverName MxiAcqReco_2.16.756.5.5.200.906653985.1404.1721894656.1426_82049_462692472_87 -logSeverityLevel SL_INFO ')
+2024/07/25  10:04:19.265  [INFO]    MxiAcqRecoPlugin: Plugin::beforeStop(): finished
+2024/07/25  10:04:19.267  [TRACE]   MrAcqSimulationPlugin: Plugin::beforeStop(): started
+2024/07/25  10:04:19.267  [TRACE]   MrAcqSimulationPlugin: Plugin::beforeStop(): return true
+2024/07/25  10:04:19.268  [TRACE]   MrAcqSimulationPlugin: SimulationServant_impl::~SimulationServant_impl(): started/finished
